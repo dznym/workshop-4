@@ -16,7 +16,7 @@ function base64ToArrayBuffer(base64: string): ArrayBuffer {
 // ################
 // ### RSA keys ###
 // ################
-// Add this exported type at the top of the RSA section
+
 export type GenerateRsaKeyPair = {
   publicKey: webcrypto.CryptoKey;
   privateKey: webcrypto.CryptoKey;
@@ -82,7 +82,6 @@ export async function rsaEncrypt(
   strPublicKey: string
 ): Promise<string> {
   const publicKey = await importPubKey(strPublicKey);
-  // Convert string to bytes using TextEncoder
   const dataBuffer = new TextEncoder().encode(b64Data);
   const encrypted = await webcrypto.subtle.encrypt(
     { name: "RSA-OAEP" },
@@ -102,7 +101,6 @@ export async function rsaDecrypt(
     privateKey,
     dataBuffer
   );
-  // Convert bytes back to original string
   return new TextDecoder().decode(decrypted);
 }
 

@@ -13,24 +13,21 @@ export async function launchRegistry() {
 
   let nodes: Node[] = [];
 
-  // Status route
   _registry.get("/status", (req, res) => {
     res.send("live");
   });
 
-  // Register node
   _registry.post("/registerNode", (req: Request, res: Response) => {
     const { nodeId, pubKey } = req.body as RegisterNodeBody;
     const existingNode = nodes.find((n) => n.nodeId === nodeId);
     if (existingNode) {
-      existingNode.pubKey = pubKey; // Update pubKey if node exists
+      existingNode.pubKey = pubKey; 
     } else {
-      nodes.push({ nodeId, pubKey }); // Add new node
+      nodes.push({ nodeId, pubKey }); 
     }
     res.status(200).json({ success: true });
   });
 
-  // Get node registry
   _registry.get("/getNodeRegistry", (req: Request, res: Response) => {
     const response: GetNodeRegistryBody = { nodes };
     res.json(response);
